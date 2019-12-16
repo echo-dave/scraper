@@ -48,7 +48,7 @@
         $('button[name=comment]').on('click', function () {
           e.preventDefault();
           let comment = {
-            _id: `ObjectId("${$('textarea').attr('name')}")`,
+            _id: $('textarea').attr('name'),
             comments: $('textarea').val()
           }
 

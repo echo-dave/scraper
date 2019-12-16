@@ -109,14 +109,27 @@ app.get("/news", function(req, res) {
 });
 //process comments
 app.post("/comment", function(req, res) {
+  console.log("req.body");
+
   console.log(req.body);
 
-  db.Comment.create({ comments: req.body.comments }).then(function(comment) {
+  db.Comment.create({ comment: req.body.comments }).then(function(comment) {
+    console.log("create comment then");
+
     console.log(comment);
+    //necessites .then in order to execute proper
     db.Scrape.findOneAndUpdate(
       { _id: req.body._id },
       { $push: { comments: comment._id } }
-    );
+    )
+      .then(function(response) {
+        console.log(response);
+        res.json(response);
+      })
+      .catch(function(err) {
+        console.log(err);
+        res.json(err);
+      });
   });
 });
 
