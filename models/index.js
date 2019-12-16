@@ -1,3 +1,4 @@
 module.exports = {
-    Scrape: require('./Scrape')
+    Scrape: require('./Scrape'),
+    Comment: require('./Comment')
 };

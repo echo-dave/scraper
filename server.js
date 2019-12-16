@@ -18,7 +18,6 @@ const cheerio = require("cheerio");
 
 // Database configuration
 var databaseUrl = "scraper";
-var collections = ["scrapedData"];
 
 //middleware
 const morgan = require("morgan");
@@ -35,11 +34,13 @@ let options = {
 };
 
 //routing
-app.get("/get", function(req, res) {
+app.use(express.static("public"));
+
+app.get("/getnews", function(req, res) {
   axios.get("http://www.fcp.co").then(function(response) {
     const $ = cheerio.load(response.data);
 
-    //get titles
+    //scrape titles, summary, url into articles array
     let articles = [];
     let title = $(".leading-0 h2.item-title")
       .text()
@@ -77,6 +78,8 @@ app.get("/get", function(req, res) {
     });
     console.log(articles);
     console.log("--------------------");
+
+    //determin if aricles exist in database. if not push inot addArticles array to be pushed into database
     let addArticles = [];
     console.log("article length " + articles.length);
 
@@ -92,16 +95,29 @@ app.get("/get", function(req, res) {
             res.json(dataPushed);
           });
         }
-        //  console.log(addArticles);
       });
     }
-    // console.log("<------------------->");
   });
+});
+//get news listings for index page
+app.get("/news", function(req, res) {
+  db.Scrape.find()
+    .populate("comments")
+    .then(function(news) {
+      res.json(news);
+    });
+});
+//process comments
+app.post("/comment", function(req, res) {
+  console.log(req.body);
 
-  //add to database
-  /* db.Scrape.insertMany(articles).then(function(articles){
-              res.json(articles);
-          }) */
+  db.Comment.create({ comments: req.body.comments }).then(function(comment) {
+    console.log(comment);
+    db.Scrape.findOneAndUpdate(
+      { _id: req.body._id },
+      { $push: { comments: comment._id } }
+    );
+  });
 });
 
 //start server
