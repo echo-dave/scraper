@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV || "development";
 const mongoose = require("mongoose");
 db = require("./models");
 mongoose.Promise = Promise;
-const mongoUrl = process.env.MONGOURL || process.env.NODE_ENV;
+const mongoUrl = process.env.MONGODB_URI;
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
