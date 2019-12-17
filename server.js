@@ -17,9 +17,6 @@ mongoose.connect(mongoUrl, {
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-// Database configuration
-var databaseUrl = "scraper";
-
 //middleware
 const morgan = require("morgan");
 app.use(morgan("dev"));
@@ -35,7 +32,7 @@ let options = {
 };
 
 //routing
-app.use(express.static("public"));
+app.use(express.static("public", options));
 
 app.get("/getnews", function(req, res) {
   axios.get("http://www.fcp.co").then(function(response) {
