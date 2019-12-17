@@ -8,7 +8,8 @@ const env = process.env.NODE_ENV || "development";
 const mongoose = require("mongoose");
 db = require("./models");
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/scraper", {
+const mongoUrl = process.env.MONGOURL || process.env.NODE_ENV;
+mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
