@@ -1,8 +1,27 @@
+body {
+  padding: 0 1rem;
+  background-color: rgb(58, 5, 14);
+}
 .delete {
   position: relative;
-  top: -5rem;
-  left: 0.5rem;
+  top: -1.5rem;
+  left: -1.5rem;
   padding: 1.5em;
-  /*   background-color: #fff;
-  color: red; */
+  z-index: 5;
+}
+
+.container {
+  max-width: 960px;
+}
+
+.pad-1 {
+  padding: 2rem 1rem;
+}
+
+.title-white {
+  color: #fff;
+}
+
+.commentbtn {
+  margin-top: 1rem;
 }

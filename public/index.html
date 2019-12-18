@@ -8,76 +8,19 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
   <title>News Scraper</title>
 </head>
 
 <body>
-  <h1 class="title is-1">News</h1>
+  <div class="container is-centered pad-1">
+    <h1 class="title is-1 title-white">News</h1>
+    <h2 id="scrape" class="button is-light">Scrape News</h2>
+    <h2 id="drop" class="button is-light">Drop Collections</h2>
+  </div>
   <div id="news" class="container"></div>
-  <script>
-    $.get("/news", function (data) {
-      console.log(data);
 
-      for (let i = 0; i < data.length; i++) {
-        $("#news").append(`
-    <div id="${data[i]._id}" class="box">
-       <h2 class="title is-2"> ${data[i].title} </h2>
-       <p>${data[i].summary}</p>
-       </p> <a href="${data[i].url}">Read More</a></p>
-        <button class="button is-medium is-primary" data-id="${data[i]._id}">Comment</button>
-    <h2 style="margin-top:1em"; class="title is-3">Comments</h2>`);
-
-        for (let j = 0; j < data[i].comments.length; j++) {
-          $(`#${data[i]._id}`).append(`<div id="${data[i].comments[j]._id}" class="card" style="background-color:#eee;min-height:2em;margin:1em;padding:1em;">
-          ${data[i].comments[j].comment}
-          </div>
-          <div class="delete" sytle="">X</div>`)
-        }
-      }
-    }).then(function () {
-      $("button").on("click", function (e) {
-        console.log("click");
-
-        $("body").append(`
-    <div class="modal is-active">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-         
-                <textarea class="textarea" name="${$(this).attr("data-id")}" placeholder="Comment Here"></textarea>
-                <button class="button is-primary" name="comment">Submit</button>
-                <button class="modal-close is-large" aria-label="close"></button>
-            
-        </div>
-
-    </div>
-    `);
-
-        $('button[name=comment]').on('click', function () {
-          e.preventDefault();
-          let comment = {
-            _id: $('textarea').attr('name'),
-            comments: $('textarea').val()
-          }
-
-          $.post("/comment", comment, function (res) {
-            console.log(res);
-
-          }).then(function () {
-            $('.modal').remove();
-          })
-          console.log(comment);
-
-        })
-
-
-        $('.modal-background').on('click', function (e) {
-          $('.modal').remove();
-        })
-
-      });
-    });
-  </script>
+  <script src="./js/main.js"></script>
 </body>
 
 </html>
