@@ -1,6 +1,7 @@
 body {
   padding: 0 1rem;
   background-color: rgb(58, 5, 14);
+  min-height: 100vh;
 }
 .delete {
   position: relative;
