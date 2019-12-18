@@ -16,3 +16,5 @@ A news scraping demonstration utilizing Cheerio and Axios to dig through site ma
 - Mongodb with Mongoose
 - jquery for rendering
 - Heroku deployed
+
+![scraper](./Scraper.jpg)
